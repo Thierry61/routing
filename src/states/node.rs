@@ -1573,6 +1573,8 @@ impl Node {
         }
 
         let (difficulty, target_size) = if self.crust_service.is_peer_hard_coded(new_pub_id) ||
+                                           // Disable resource proof in local tests
+                                           cfg!(feature = "local-network") ||
                                            self.peer_mgr.is_joining_node(new_pub_id) {
             (0, 1)
         } else {
