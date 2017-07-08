@@ -990,6 +990,10 @@ impl PeerManager {
 
     /// Checks whether we can accept more clients.
     pub fn can_accept_client(&self, client_ip: IpAddr) -> bool {
+        if cfg!(feature = "local-network") {
+            // Don't control number of clients in local network
+            return true;
+        }
         let mut existing_client_count = 0;
         !self.peers
              .values()
